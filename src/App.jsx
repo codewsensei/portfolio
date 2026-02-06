@@ -6,7 +6,7 @@ import Skills from "./pages/Skills";
 import Projects from "./pages/Projects";
 import About from "./pages/About";
 
-// Vertical Navbar Component
+// Responsive Navbar Component
 const Sidebar = () => {
   const links = [
     { name: "Home", path: "/" },
@@ -16,16 +16,24 @@ const Sidebar = () => {
   ];
 
   return (
-    <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-[100] flex flex-col items-end gap-12">
-      {/* Dynamic Vertical Line */}
-      <div className="absolute right-0 top-[-100px] bottom-[-100px] w-[1px] bg-white/5" />
+    <nav className={`
+      fixed z-[100] flex transition-all duration-500
+      /* Desktop: Center Right Vertical */
+      md:right-8 md:top-1/2 md:-translate-y-1/2 md:flex-col md:items-end md:gap-12
+      /* Mobile: Bottom Right Box */
+      right-4 bottom-6 flex-col items-end gap-6 p-4 
+      bg-white/[0.02] backdrop-blur-lg border border-white/5 rounded-2xl md:bg-transparent md:backdrop-blur-none md:border-none md:p-0
+    `}>
+      
+      {/* Dynamic Vertical Line (Desktop Only) */}
+      <div className="absolute right-0 top-[-100px] bottom-[-100px] w-[1px] bg-white/5 hidden md:block" />
       
       {links.map((link, i) => (
         <NavLink
           key={link.path}
           to={link.path}
           className={({ isActive }) =>
-            `group relative flex items-center gap-6 text-[10px] tracking-[0.4em] uppercase transition-all duration-700 ${
+            `group relative flex items-center gap-4 md:gap-6 text-[9px] md:text-[10px] tracking-[0.4em] uppercase transition-all duration-700 ${
               isActive ? "text-white" : "text-white/20 hover:text-white"
             }`
           }
@@ -37,7 +45,7 @@ const Sidebar = () => {
               </span>
 
               {/* Interaction Indicator */}
-              <div className="relative w-12 h-[1px] bg-current opacity-20 group-hover:opacity-100 group-hover:w-16 transition-all duration-500">
+              <div className="relative w-8 md:w-12 h-[1px] bg-current opacity-20 group-hover:opacity-100 group-hover:w-16 transition-all duration-500">
                 {isActive && (
                   <motion.div
                     layoutId="activeVertical"
@@ -46,18 +54,13 @@ const Sidebar = () => {
                   />
                 )}
               </div>
-              
-              {/* Ghost Numbering */}
-              {/* <span className="absolute -left-12 opacity-0 group-hover:opacity-10 transition-opacity font-sans font-bold text-lg">
-                0{i + 1}
-              </span> */}
             </>
           )}
         </NavLink>
       ))}
       
-      {/* Scroll Hint Detail */}
-      <div className="mt-10 flex flex-col items-center gap-4">
+      {/* Scroll Hint Detail (Hidden on mobile to save space) */}
+      <div className="mt-4 md:mt-10 hidden md:flex flex-col items-center gap-4">
          <span className="rotate-90 text-[8px] tracking-[0.5em] opacity-20 uppercase whitespace-nowrap">Scroll to Navigate</span>
          <div className="w-[1px] h-12 bg-gradient-to-b from-[#BC002D] to-transparent" />
       </div>
@@ -100,12 +103,12 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#070707] text-white selection:bg-[#BC002D]/30">
-      {/* Right-Side Vertical Navbar */}
+      {/* Responsive Navbar */}
       <Sidebar />
 
-      {/* Decorative Branding (Optional top-left) */}
-      <div className="fixed top-10 left-10 z-[100] mix-blend-difference pointer-events-none">
-         <span className="text-[10px] tracking-[1em] opacity-40 uppercase font-sans">@Codewsensei</span>
+      {/* Branding - Adjusted for mobile */}
+      <div className="fixed top-6 left-6 md:top-10 md:left-10 z-[100] mix-blend-difference pointer-events-none">
+         <span className="text-[9px] md:text-[10px] tracking-[0.5em] md:tracking-[1em] opacity-40 uppercase font-sans">@Codewsensei</span>
       </div>
 
       <AnimatePresence mode="wait">
