@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Routes, Route, useLocation, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -5,6 +6,26 @@ import Home from "./pages/Home";
 import Skills from "./pages/Skills";
 import Projects from "./pages/Projects";
 import About from "./pages/About";
+
+// --- UPDATED: Smooth Scroll To Top ---
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Delay thoda sa taaki exit animation ke sath conflict na ho
+    const timeout = setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth", // Isse scroll jhatke se nahi, smoothly upar jayega
+      });
+    }, 100); 
+
+    return () => clearTimeout(timeout);
+  }, [pathname]);
+
+  return null;
+};
 
 // Responsive Navbar Component
 const Sidebar = () => {
@@ -25,10 +46,9 @@ const Sidebar = () => {
       bg-white/[0.02] backdrop-blur-lg border border-white/5 rounded-2xl md:bg-transparent md:backdrop-blur-none md:border-none md:p-0
     `}>
       
-      {/* Dynamic Vertical Line (Desktop Only) */}
       <div className="absolute right-0 top-[-100px] bottom-[-100px] w-[1px] bg-white/5 hidden md:block" />
       
-      {links.map((link, i) => (
+      {links.map((link) => (
         <NavLink
           key={link.path}
           to={link.path}
@@ -44,7 +64,6 @@ const Sidebar = () => {
                 {link.name}
               </span>
 
-              {/* Interaction Indicator */}
               <div className="relative w-8 md:w-12 h-[1px] bg-current opacity-20 group-hover:opacity-100 group-hover:w-16 transition-all duration-500">
                 {isActive && (
                   <motion.div
@@ -58,27 +77,21 @@ const Sidebar = () => {
           )}
         </NavLink>
       ))}
-      
-      {/* Scroll Hint Detail (Hidden on mobile to save space) */}
-      <div className="mt-4 md:mt-10 hidden md:flex flex-col items-center gap-4">
-         <span className="rotate-90 text-[8px] tracking-[0.5em] opacity-20 uppercase whitespace-nowrap">Scroll to Navigate</span>
-         <div className="w-[1px] h-12 bg-gradient-to-b from-[#BC002D] to-transparent" />
-      </div>
     </nav>
   );
 };
 
 const pageVariants = {
-  initial: { opacity: 0, x: -20, filter: "blur(10px)" },
+  initial: { opacity: 0, y: 20, filter: "blur(10px)" },
   animate: { 
     opacity: 1, 
-    x: 0, 
+    y: 0, 
     filter: "blur(0px)",
     transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
   },
   exit: { 
     opacity: 0, 
-    x: 20, 
+    y: -20, 
     filter: "blur(10px)",
     transition: { duration: 0.5, ease: "easeIn" } 
   },
@@ -103,15 +116,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#070707] text-white selection:bg-[#BC002D]/30">
-      {/* Responsive Navbar */}
+      <ScrollToTop />
       <Sidebar />
 
-      {/* Branding - Adjusted for mobile */}
       <div className="fixed top-6 left-6 md:top-10 md:left-10 z-[100] mix-blend-difference pointer-events-none">
          <span className="text-[9px] md:text-[10px] tracking-[0.5em] md:tracking-[1em] opacity-40 uppercase font-sans">@Codewsensei</span>
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
           <Route path="/skills" element={<PageWrapper><Skills /></PageWrapper>} />
