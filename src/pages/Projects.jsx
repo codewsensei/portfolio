@@ -28,7 +28,7 @@ const BlurReveal = ({ text, delay = 0 }) => {
 const projects = [
   {
     title: "Axon Audit",
-    desc: "A protocol where you don't need firms or big KOLs contact to audit your contract, or if you are a auditor and don't have any job or joined any firm yet, start to audit and earn here.",
+    desc: "A protocol where you don't need firms or big KOLs contact to audit your contract, or if you are an auditor and don't have any job or joined any firm yet, audit here and start your earning.",
     tag: "Audit_PROTOCOL_01",
     preview: "https://axon-audit.vercel.app/",
   },
@@ -50,17 +50,6 @@ export default function Projects() {
   return (
     <main className="min-h-screen bg-[#070707] text-[#D1D1D1] font-serif pt-32 md:pt-40 pb-20 px-6 md:px-10 relative overflow-x-hidden">
       
-      {/* --- BACKGROUND SYSTEM --- */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <svg className="w-full h-full opacity-[0.15] contrast-125">
-          <filter id="noiseFilter">
-            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-        </svg>
-      </div>
-      <div className="fixed inset-0 pointer-events-none z-1 bg-[radial-gradient(circle_at_50%_50%,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
-
       {/* ZEN ACCENT */}
       <div className="fixed top-8 right-8 md:top-12 md:right-12 w-2 h-2 bg-[#BC002D] rounded-full z-50 shadow-[0_0_15px_rgba(188,0,45,0.4)]" />
 
@@ -74,7 +63,7 @@ export default function Projects() {
             transition={{ duration: 1.2, ease: [0.83, 0, 0.17, 1] }}
             className="absolute inset-0 bg-[#BC002D] z-10"
           />
-          <h1 className="text-6xl md:text-9xl font-light tracking-tighter text-white">
+          <h1 className="text-6xl md:text-9xl font-light tracking-tighter text-white leading-tight">
             Selected
           </h1>
         </div>
@@ -114,6 +103,7 @@ export default function Projects() {
               <motion.a
                 href={p.preview}
                 target="_blank"
+                rel="noreferrer"
                 className="inline-flex items-center gap-4 text-[10px] tracking-[0.4em] uppercase text-white group/link"
               >
                 <span className="border-b border-white/10 pb-1 group-hover/link:border-[#BC002D] transition-colors duration-500">Visit Live</span>
@@ -135,10 +125,9 @@ export default function Projects() {
                   transition={{ duration: 1.2, ease: "easeOut" }}
                   className="w-full h-full"
                 >
-                  {/* iFrame visibility is limited on small mobile devices to save performance */}
                   <iframe
                     src={p.preview}
-                    className="w-[150%] h-[150%] origin-top-left scale-[0.67] grayscale opacity-60 md:opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none"
+                    className="w-[150%] h-[150%] origin-top-left scale-[0.67] grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 pointer-events-none"
                     title={p.title}
                     loading="lazy"
                   />
@@ -154,7 +143,7 @@ export default function Projects() {
                 />
               </motion.div>
 
-              {/* Ghost Background Title - Hidden on small screens */}
+              {/* Ghost Background Title - Desktop Only */}
               <div className="absolute -right-8 top-0 h-full hidden lg:flex items-center pointer-events-none">
                 <span className="text-[10rem] font-black text-white/[0.02] uppercase font-sans tracking-tighter rotate-90 origin-center leading-none select-none">
                   {p.title}
