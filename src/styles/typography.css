@@ -1,0 +1,20 @@
+.sk-heading {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.sk-gradient {
+  background: linear-gradient(
+    to right,
+    rgba(255,255,255,1),
+    rgba(255,255,255,0.6)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sk-muted {
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em;
+}
